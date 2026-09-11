@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>巡り</title>
+    <link rel="stylesheet" href="./style.css">
+    <!-- Yuji Syuku -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet">
+    <!-- leaflet の読み込み-->
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <!-- Supabase SDK の読み込み-->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+
+  <div id="splash-id">
+    <div class="splash-class" id="main-title">
+      <h1 class="splash-title">巡り</h1>
+      <p class="splash-sub">-meguri-</p>
+    </div>
+  </div>
+
+  <section id="form-section" class="page-section hidden">
+    <h2>-入力フォーム-</h2>
+    <form id="input-form">
+      <div class="form-group">
+        <label for="name">寺社名</label>
+        <input type="text" id="name" placeholder="住吉大社">
+      </div>  
+
+      <div class="form-group">
+        <label for="date">日付</label>
+        <input type="date" id="date" required>
+      </div>
+
+      <div class="form-group">
+        <label for="reijo">霊場</label>
+        <select id="reijo" required>
+            <option value="sitifuku">大阪七福神めぐり</option>
+            <option value="naniwa">なにわ七幸めぐり</option>
+            <option value="shifudo">大阪四不動霊場</option>
+            <option value="jusan">おおさか十三仏霊場</option>
+            <option value="kawauti">河内西国霊場</option>
+            <option value="izumi">和泉西国霊場</option>
+            <option value="nasi">なし</option>
+        </select>    
+      </div>
+
+      <div class="form-group">
+        <label for="mapurl">Googleマップ[URL]</label>
+        <input type="url" id="mapurl" placeholder="https://www.google.co.jp/maps/place/%E4%BD%8F%E5%90%89%E5%A4%A7%E7%A4%BE/@34.6123945,135.4937612,17z/data=!3m1!4b1!4m6!3m5!1s0x6000e7bbc67c0001:0xa7f51dfe4d001f82!8m2!3d34.6123945!4d135.4937612!16zL20vMGRwdDBj?entry=ttu&g_ep=EgoyMDI2MDgzMS4wIKXMDSoASAFQAw%3D%3D">
+      </div>
+
+      <div class="form-group">
+        <label for="">メモ</label>
+        <input type="text" id="memo">
+      </div>
+
+      <div class="form-group photo-submit-group">
+        <div class="photo-input-wrapper">
+          <label for="photo">写真を選択</label>
+          <input type="file" id="photo" accept="image/*">
+        </div>
+        <button type="submit" class="submit-btn">登録</button>
+      </div>
+
+    </form>
+  </section> 
+
+  <section id="main-section" class="page-section">
+    <div class="main-layout">
+      
+      <!--地図おくとこ-->
+      <div id="map">
+        <button class="initial-btn">初期位置</button>
+      </div>
+
+      <!--御朱印の写真を置く-->
+      <div class="photo-list" id="photo-list">
+        <!--メインの右側-->
+      </div>
+    </div>
+  </section>
+
+  <div class="nav-buttons">
+    <button id="btn-form" class="nav-btn">入力フォーム</button>
+    <button id="btn-main" class="nav-btn active">メイン画面</button>
+  </div>
+
+</body>
+</html>

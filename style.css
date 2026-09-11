@@ -1,0 +1,405 @@
+body { 
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e4c19f;
+    /* 1. ノイズ画像(SVG)でざらっとした和紙の質感を生成 */
+    /* 2. 中心がやや明るい和風のグラデーションを重ねる */
+    background-image: 
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.09'/%3E%3C/svg%3E"),
+        radial-gradient(circle at 50% 30%, #f3ece1 0%, #e4c19f 80%);
+    background-attachment: fixed;
+}
+.form-group { margin-bottom: 12px; }
+label { display: block; margin-bottom: 4px; font-weight: bold; }
+input, select { width: 100%; padding: 8px; box-sizing: border-box; font-size: 16px;}
+
+/* splashの白の背景 */
+#splash-id {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #fdfbf7;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* 下の要素をクリックできるようにする */
+    transition: background-color 0.8s ease; /* 背景色だけふわっと消す */
+}
+
+.splash-class {
+    font-family: 'Yuji Syuku', serif;
+    display: flex;
+    flex-direction: column;    /* タイトルとサブタイトルを上下に配置 */
+    align-items: center;       /* 左右の中心線をぴったり合わせる */
+    justify-content: center;   /* 上下の中心も合わせる */
+}
+
+/* 背景が消える時 */
+#splash-id.fade-out {
+    background-color: transparent; /* 背景を透明にする */
+    pointer-events: none;          /* クリックを貫通させる */
+}
+
+/* splashの文字 */
+#main-title {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 10000;
+    
+    display: flex;
+    flex-direction: column; /* 最初は上下並び */
+    align-items: center;
+}
+
+/* スプラッシュ終了後に移動した後の姿 */
+#main-title.moved {
+  position: fixed;         /* fixedを維持して画面右上に確実に飛ばす */
+    top: 0.5vh;                /* 上からの位置 */
+    right: 7%;              /* 右からの位置 */
+    left: auto;              /* 中央寄せのleft指定を解除 */
+    transform: translate(0, 0); /* 中央寄せ変形を解除 */
+    
+    display: flex;
+    flex-direction: row-reverse; /* 移動後は横並び（右に巡り、左に-meguri-） */
+    align-items: baseline;
+    gap: 20px;
+}
+
+/* 巡り（タイトル）の移動前後の変化 */
+.splash-title {
+    font-size: 80px;
+    color: #E64A19;
+    margin: 0;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    letter-spacing: 0.2em;
+    transition: font-size 0.8s ease;
+}
+
+#main-title.moved .splash-title {
+    font-size: 50px;           /* ヘッダー用のサイズ */
+    writing-mode: horizontal-tb; /* 移動後は横書きにする */
+    letter-spacing: 0.1em;
+}
+
+/* -meguri- */
+.splash-sub {
+    font-size: 30px;
+    color: #666;
+    margin: 0;
+    transition: opacity 0.5s ease;
+}
+
+#main-title.moved .splash-sub {
+   font-size: 25px;
+}
+
+#form-section {
+    width: 100%;
+    max-width: 500px; 
+    margin: 0 auto; 
+}
+
+#main-section,
+#form-section {
+    margin-top: 8vh; /* タイトルの高さ分だけ下へ押し下げる */
+}
+
+.submit-btn {
+    display: block;
+    width: 100%;
+    max-width: 500px; 
+    margin: 0 auto; 
+    background-color: #956940;
+    height: 7vh;
+    font-size: 25px;
+    font-weight: bold;
+    color: #444;
+}
+
+.hidden{
+    display: none !important;
+}
+
+.main-layout {
+    display: flex;
+    gap: 20px;
+    height: 80vh;
+    width: 100%;
+}
+
+.photo-list {
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+
+}
+
+#map {
+    flex: 2;
+    height: 100%;
+    position: relative;
+}
+
+.initial-btn {
+    position: absolute;
+    top: 10px; 
+    right: 10px; 
+    z-index: 1000;
+    height: 5vh;
+    cursor: pointer;
+}
+
+/*写真の枠*/
+.photo-card {
+background: #fff;
+border-radius: 12px;
+overflow: hidden;
+box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+margin-bottom: 20px;
+}
+
+/* 写真部分 */
+.photo-card img {
+width: 100%;
+height: 200px;
+object-fit: cover;
+display: block;
+}
+
+/* 文字情報エリア */
+.photo-info {
+padding: 12px 16px;
+}
+
+/* 神社名（大きめ） */
+.photo-info h3 {
+margin: 0 0 6px 0;
+font-size: 18px;
+color: #222;
+}
+
+/* 日付 */
+.photo-info .date {
+margin: 0 0 4px 0;
+font-size: 14px;
+color: #e91e63; /* 濃いピンク系の強調色 */
+font-weight: bold;
+}
+
+/* 霊場名 */
+.photo-info .reijo {
+margin: 0 0 4px 0;
+font-size: 13px;
+color: #444;
+}
+
+/* メモ */
+.photo-info .memo {
+margin: 0;
+font-size: 12px;
+color: #666;
+}
+/* L.divIconの不要な背景と枠線を消す */
+.custom-pin {
+    background: none;
+    border: none;
+}
+/* 写真リストのスクロールを滑らかにする */
+.photo-list {
+    scroll-behavior: smooth;
+}
+
+/* ピンをクリックしたときにカードを強調する枠線アニメーション */
+.photo-card.highlight {
+    border-left: 4px solid #ff4081 !important;
+    border-right: 4px solid #ff4081 !important;
+    transition: border-color 0.3s ease;
+}
+/* カード内の右下ボタン配置エリア */
+.card-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+/* 削除ボタンのスタイリング */
+.delete-btn {
+    background-color: #ff5252;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+    background-color: #d32f2f;
+}
+
+.nav-buttons {
+    display: flex;
+    width: 100%;
+    height: 90px;
+    position: fixed;
+    bottom: 0;
+}
+
+.nav-buttons button {
+    flex: 1;
+    margin: 0;
+    padding: 12px 0;
+    border: none;
+    cursor: pointer;
+    font-size: 35px;
+    font-weight: bold;
+    color: #444;
+}
+
+.nav-btn.active {
+background-color: #E64A19;
+}
+
+.nav-btn {
+background-color: #F5F5F0;
+}
+
+h2 {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    /* 既存のスマホ用設定 */
+    body {
+        overflow: hidden;
+    }
+
+    .main-layout {
+        flex-direction: column;
+    }
+    
+    #map {
+        height: 40vh;
+    }
+
+    #main-title.moved {
+        top: 10px;
+        right: 15px;
+        gap: 8px;
+    }
+
+    #main-title.moved .splash-title {
+        font-size: 32px;
+    }
+
+    #main-title.moved .splash-sub {
+        font-size: 16px;
+    }
+
+    #form-section {
+        box-sizing: border-box;
+        padding: 0 16px 140px 16px;
+        width: 100%;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .photo-submit-group {
+        display: flex;
+        align-items: flex-end;
+        gap: 10px;
+    }
+
+    .photo-input-wrapper {
+        flex: 1;
+    }
+
+    .submit-btn {
+        width: auto;
+        flex: 0 0 100px;
+        height: 42px;
+        font-size: 16px;
+        margin: 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* カード横スクロール ＆ 横並びレイアウト（!importantで強力適用） */
+    .photo-list {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        gap: 12px !important;
+        padding: 8px 16px !important;
+        scroll-snap-type: x mandatory !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+
+    .photo-card {
+        flex: 0 0 85% !important;
+        display: flex !important;
+        flex-direction: row !important;  /* 写真とテキストを横並び */
+        align-items: center !important;
+        margin-bottom: 0 !important;
+        scroll-snap-align: center !important;
+        background: #fff !important;
+        border-radius: 12px !important;
+        overflow: hidden !important;
+        height: 110px !important;
+    }
+
+    .photo-card img {
+        width: 100px !important;         /* 強制的に100pxに固定 */
+        height: 100px !important;
+        min-width: 100px !important;
+        object-fit: cover !important;
+        border-radius: 8px !important;
+        margin-left: 5px !important;
+    }
+
+    .photo-info {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        padding: 5px 10px !important;
+        min-width: 0 !important;
+    }
+
+    .photo-info h3 {
+        font-size: 15px !important;
+        margin: 0 0 2px 0 !important;
+        color: #222222 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+
+    .photo-info p {
+        font-size: 11px !important;
+        margin: 0 0 2px 0 !important;
+        color: #555555 !important;
+    }
+
+    .card-footer {
+        margin-top: 2px !important;
+    }
+
+    .delete-btn {
+        padding: 2px 6px !important;
+        font-size: 10px !important;
+    }
+}
