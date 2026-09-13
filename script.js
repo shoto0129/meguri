@@ -3,7 +3,8 @@ const SUPABASE_URL = 'https://fgliaksecvlyoqxqoeet.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZnbGlha3NlY3ZseW9xeHFvZWV0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkwOTkyNjcsImV4cCI6MjEwNDY3NTI2N30.W_SaxY_uWWz2atiSIxGAAOQc9rx5CZ0mEKM0URZu8k0';
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const map = L.map('map').setView([34.6937, 135.5023], 12);
+const initialZoom = window.innerWidth <= 768 ? 10 : 12;
+const map = L.map('map').setView([34.6937, 135.5023], initialZoom);
 
 L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
     attribution: '© 国土地理院'
@@ -54,7 +55,8 @@ btnForm.addEventListener('click', () => {
 
 //初期位置ボタンを押したとき
 initialBtn.addEventListener('click', () => {
-    map.flyTo([34.6937, 135.5023], 12, { duration: 0.5 });
+    const zoom = window.innerWidth <= 768 ? 10 : 12;
+    map.flyTo([34.6937, 135.5023], zoom, { duration: 0.5 });
 });
 
 //登録ボタン押したとき
@@ -64,6 +66,8 @@ inputForm.addEventListener('submit', async (e) => {
     const {data: {session}} = await supabaseClient.auth.getSession();
     if (!session) {
         alert('登録には管理者ログインが必要です')
+        inputForm.reset();
+        document.getElementById('date').valueAsDate = new Date();
         loginModal.classList.remove('hidden');
         return;
     }
