@@ -25,6 +25,16 @@
     </div>
   </div>
 
+  <div id="login-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3>管理者ログイン</h3>
+        <input type="email" id="login-email" class="modal-input" placeholder="メールアドレス">
+        <input type="password" id="login-password" class="modal-input" placeholder="パスワード">
+        <button id="login-submit-btn" class="modal-btn-submit">ログイン</button>
+        <button id="login-close-btn" class="modal-btn-cancel">キャンセル</button>
+    </div>
+  </div>
+
   <section id="form-section" class="page-section hidden">
     <h2>-入力フォーム-</h2>
     <form id="input-form">
@@ -90,6 +100,7 @@
   <div class="nav-buttons">
     <button id="btn-form" class="nav-btn">入力フォーム</button>
     <button id="btn-main" class="nav-btn active">メイン画面</button>
+    <button id="btn-auth" class="nav-btn nav-btn-auth">ログイン</button>
   </div>
 
 </body>

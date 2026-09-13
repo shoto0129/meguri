@@ -15,8 +15,11 @@ const mainSection = document.getElementById('main-section');
 const formSection = document.getElementById('form-section');
 const inputForm = document.getElementById('input-form');
 const initialBtn = document.querySelector('.initial-btn');
+const loginModal = document.getElementById('login-modal');
+const btnAuth = document.getElementById('btn-auth');
+const loginSubmitBtn = document.getElementById('login-submit-btn');
+const loginCloseBtn = document.getElementById('login-close-btn');
 
-// 日付入力の初期値として今日の日付を自動セット
 document.getElementById('date').valueAsDate = new Date();
 
 //霊場を日本語に
@@ -57,6 +60,13 @@ initialBtn.addEventListener('click', () => {
 //登録ボタン押したとき
 inputForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const {data: {session}} = await supabaseClient.auth.getSession();
+    if (!session) {
+        alert('登録には管理者ログインが必要です')
+        loginModal.classList.remove('hidden');
+        return;
+    }
 
     const name = document.getElementById('name').value;
     const date = document.getElementById('date').value;
@@ -107,7 +117,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     } ,2000);
     
+    checkAuthUI();
     loadItems();
+});
+
+btnAuth.addEventListener('click', async () => {
+    const {data:{session}} = await supabaseClient.auth.getSession();
+
+    if (session) {
+        await supabaseClient.auth.signOut();
+        alert('ログアウトしました');
+        checkAuthUI();
+    } else {
+        loginModal.classList.remove('hidden');
+    }
+});
+
+loginCloseBtn.addEventListener('click', () => {
+    loginModal.classList.add('hidden');
+});
+
+loginSubmitBtn.addEventListener('click', async () => {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;  
+
+    const {data, error} = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: password
+    });
+
+    if (error) {
+        alert('ログイン失敗:' + error.message);
+        return;
+    }
+    alert('管理者としてログインしました');
+    loginModal.classList.add('hidden');
+    checkAuthUI();
 });
 
 //霊場ごとに色を変える
@@ -223,6 +268,13 @@ function renderItemUI(item) {
     deleteBtn.addEventListener('click', async (e) => {
         e.stopPropagation();
 
+        const {data: {session}} = await supabaseClient.auth.getSession();
+        if (!session) {
+            alert('削除には管理者ログインが必要です')
+            loginModal.classList.remove('hidden');
+            return;
+        }
+
         if (confirm(`${item.name} の記録を削除しますか？`)) {
             if (item.id) {
                 const { error } = await supabaseClient
@@ -282,4 +334,13 @@ function compressImage(file) {
         reader.onerror = reject;
         reader.readAsDataURL(file);
     });
+}
+
+async function checkAuthUI() {
+    const {data:{session}} = await supabaseClient.auth.getSession();
+    if (session) {
+        btnAuth.textContent = 'ログアウト';
+    } else {
+        btnAuth.textContent = 'ログイン';
+    }
 }
