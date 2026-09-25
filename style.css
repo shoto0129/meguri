@@ -356,6 +356,7 @@ h2 {
     
     #map {
         height: 40vh;
+        margin-bottom: 0;
     }
 
     #main-title.moved {
@@ -410,10 +411,11 @@ h2 {
         overflow-x: auto !important;
         overflow-y: hidden !important;
         gap: 12px !important;
-        padding: 8px 16px !important;
+        padding: 4px 16px 8px 16px !important;
         height: 160px !important;
         scroll-snap-type: x mandatory !important;
         -webkit-overflow-scrolling: touch !important;
+        margin-top: 0 !important;
     }
 
     .photo-card {
