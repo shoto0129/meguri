@@ -190,7 +190,7 @@ color: #222;
 .photo-info .date {
 margin: 0 0 4px 0;
 font-size: 14px;
-color: #e91e63; /* 濃いピンク系の強調色 */
+color: #e91e63;
 font-weight: bold;
 }
 
@@ -204,6 +204,8 @@ font-weight: bold;
     margin: 0 0 4px 0;
     font-size: 13px;
     color: #666;
+    font-weight: bold;
+    color: #e91e63;
 }
 
 /* メモ */
@@ -427,7 +429,7 @@ h2 {
     }
 
     .photo-card img {
-        width: 100px !important;         /* 強制的に100pxに固定 */
+        width: 110px !important;         /* 強制的に100pxに固定 */
         height: 100px !important;
         min-width: 100px !important;
         object-fit: cover !important;
