@@ -433,7 +433,7 @@ h2 {
     }
 
     .photo-card img {
-        width: 120px !important;         /* 強制的に100pxに固定 */
+        width: 130px !important; 
         height: 100px !important;
         min-width: 120px !important;
         object-fit: cover !important;
