@@ -255,7 +255,7 @@ function renderItemUI(item) {
             <h3>${item.name}</h3>
             <p class="date">${item.date}</p>
             <p class="chapter">${chaptername}</p>
-            <p class="deity">${item.deity}</p>
+            <p class="deity">【祭神】: ${item.deity}</p>
             ${item.memo ? `<p class="memo">${item.memo}</p>` : ''}
             <div class="card-footer">
                 <button class="delete-btn">削除</button>
