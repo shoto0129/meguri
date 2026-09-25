@@ -418,10 +418,11 @@ h2 {
 
     .photo-card {
         flex: 0 0 85% !important;
-        height: 140px !important;     /* ← ここで全体の高さを変更 */
-        min-height: 140px !important;
+        height: 145px !important;     /* ← ここで全体の高さを変更 */
+        min-height: 145px !important;
         display: flex !important;
-        flex-direction: row !important;  /* 写真とテキストを横並び */
+        flex-direction: row !important; 
+        align-items: stretch !important;
         align-items: center !important;
         margin-bottom: 0 !important;
         scroll-snap-align: center !important;
@@ -452,6 +453,7 @@ h2 {
     .photo-info h3 {
         font-size: 15px !important;
         margin: 0 0 2px 0 !important;
+        padding-top: 2px !important;
         color: #222222 !important;
         white-space: nowrap !important;
         overflow: hidden !important;
