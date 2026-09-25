@@ -348,11 +348,6 @@ h2 {
 }
 
 @media (max-width: 768px) {
-    /* 既存のスマホ用設定 */
-    body {
-        overflow: hidden;
-    }
-
     .main-layout {
         flex-direction: column;
     }
