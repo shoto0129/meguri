@@ -411,12 +411,15 @@ h2 {
         overflow-y: hidden !important;
         gap: 12px !important;
         padding: 8px 16px !important;
+        height: 160px !important;
         scroll-snap-type: x mandatory !important;
         -webkit-overflow-scrolling: touch !important;
     }
 
     .photo-card {
         flex: 0 0 85% !important;
+        height: 140px !important;     /* ← ここで全体の高さを変更 */
+        min-height: 140px !important;
         display: flex !important;
         flex-direction: row !important;  /* 写真とテキストを横並び */
         align-items: center !important;
@@ -431,7 +434,7 @@ h2 {
     .photo-card img {
         width: 110px !important;         /* 強制的に100pxに固定 */
         height: 100px !important;
-        min-width: 100px !important;
+        min-width: 110px !important;
         object-fit: cover !important;
         border-radius: 8px !important;
         margin-left: 5px !important;
@@ -458,7 +461,17 @@ h2 {
     .photo-info p {
         font-size: 11px !important;
         margin: 0 0 2px 0 !important;
-        color: #555555 !important;
+        color: #555555
+    }
+
+    .photo-info .date {
+    color: #e91e63;
+    font-weight: bold;
+    }
+
+    .photo-info .deity {
+    font-weight: bold;
+    color: #e91e63;
     }
 
     .card-footer {
