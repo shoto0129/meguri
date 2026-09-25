@@ -432,9 +432,9 @@ h2 {
     }
 
     .photo-card img {
-        width: 110px !important;         /* 強制的に100pxに固定 */
+        width: 120px !important;         /* 強制的に100pxに固定 */
         height: 100px !important;
-        min-width: 110px !important;
+        min-width: 120px !important;
         object-fit: cover !important;
         border-radius: 8px !important;
         margin-left: 5px !important;
