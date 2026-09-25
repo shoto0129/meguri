@@ -355,7 +355,7 @@ h2 {
     }
     
     #map {
-        height: 40vh;
+        height: 38vh;
         margin-bottom: 0;
     }
 
@@ -404,18 +404,18 @@ h2 {
         cursor: pointer;
     }
 
-    /* カード横スクロール ＆ 横並びレイアウト（!importantで強力適用） */
     .photo-list {
         display: flex !important;
         flex-direction: row !important;
         overflow-x: auto !important;
         overflow-y: hidden !important;
-        gap: 12px !important;
-        padding: 4px 12px 6px 12px !important;
+        gap: 10px !important;
+        padding: 0 12px 6px 12px !important; /* 上のパディングを 0 に */
+        margin-top: -12px !important;         /* ★マイナスマージンでカード全体を上に引っ張り上げる */
         height: 150px !important;
-        scroll-snap-type: x mandatory !important;
-        -webkit-overflow-scrolling: touch !important;
-        margin-top: 0 !important;
+        align-items: center !important;
+        position: relative !important;        /* 重なり順を正しく保持 */
+        z-index: 10 !important;
     }
 
     .photo-card {
