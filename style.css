@@ -194,11 +194,16 @@ color: #e91e63; /* 濃いピンク系の強調色 */
 font-weight: bold;
 }
 
-/* 霊場名 */
-.photo-info .reijo {
-margin: 0 0 4px 0;
-font-size: 13px;
-color: #444;
+.photo-info .chapter {
+    margin: 0 0 4px 0;
+    font-size: 13px;
+    color: #444;
+}
+
+.photo-info .deity {
+    margin: 0 0 4px 0;
+    font-size: 13px;
+    color: #666;
 }
 
 /* メモ */

@@ -39,41 +39,45 @@
     <h2>-入力フォーム-</h2>
     <form id="input-form">
       <div class="form-group">
-        <label for="name">寺社名</label>
-        <input type="text" id="name" placeholder="住吉大社">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="伊勢神宮">
       </div>  
 
       <div class="form-group">
-        <label for="date">日付</label>
+        <label for="date">Date</label>
         <input type="date" id="date" required>
       </div>
 
       <div class="form-group">
-        <label for="reijo">霊場</label>
-        <select id="reijo" required>
-            <option value="sitifuku">大阪七福神めぐり</option>
-            <option value="naniwa">なにわ七幸めぐり</option>
-            <option value="shifudo">大阪四不動霊場</option>
-            <option value="jusan">おおさか十三仏霊場</option>
-            <option value="kawauti">河内西国霊場</option>
-            <option value="izumi">和泉西国霊場</option>
-            <option value="nasi">なし</option>
+        <label for="deity">Deity</label>
+        <input type="text" id="deity" placeholder="天照大御神/アマテラス">
+      </div> 
+
+      <div class="form-group">
+        <label for="chapter">Chapter</label>
+        <select id="chapter" required>
+          <option value="tentisosei">【第1章】天地創世</option>
+          <option value="izumosinwa">【第2章】出雲神話</option>
+          <option value="kunidukuri">【第3章】国づくり</option>
+          <option value="tensokorin">【第4章】天孫降臨</option>
+          <option value="hitogami">【第5章】人神・武将</option>
+          <option value="kindai">【第6章】近代・現代</option>
         </select>    
       </div>
 
       <div class="form-group">
-        <label for="mapurl">Googleマップ[URL]</label>
-        <input type="url" id="mapurl" placeholder="https://www.google.co.jp/maps/place/%E4%BD%8F%E5%90%89%E5%A4%A7%E7%A4%BE/@34.6123945,135.4937612,17z/data=!3m1!4b1!4m6!3m5!1s0x6000e7bbc67c0001:0xa7f51dfe4d001f82!8m2!3d34.6123945!4d135.4937612!16zL20vMGRwdDBj?entry=ttu&g_ep=EgoyMDI2MDgzMS4wIKXMDSoASAFQAw%3D%3D">
+        <label for="mapurl">GoogleMap[URL]</label>
+        <input type="url" id="mapurl" placeholder="https://www.google.co.jp/maps/place/%E4%BC%8A%E5%8B%A2%E7%A5%9E%E5%AE%AE/@34.4550157,136.7226102,17z/data=!3m1!4b1!4m6!3m5!1s0x600450ebdf9f37f3:0xf009663753f60ca7!8m2!3d34.4550157!4d136.7251851!16zL20vMDJyX2c0?entry=ttu&g_ep=EgoyMDI2MDkyMi4wIKXMDSoASAFQAw%3D%3D">
       </div>
 
       <div class="form-group">
-        <label for="">メモ</label>
+        <label for="memo">Memo</label>
         <input type="text" id="memo">
       </div>
 
       <div class="form-group photo-submit-group">
         <div class="photo-input-wrapper">
-          <label for="photo">写真を選択</label>
+          <label for="photo">Photo</label>
           <input type="file" id="photo" accept="image/*">
         </div>
         <button type="submit" class="submit-btn">登録</button>

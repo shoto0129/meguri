@@ -24,14 +24,13 @@ const loginCloseBtn = document.getElementById('login-close-btn');
 document.getElementById('date').valueAsDate = new Date();
 
 //霊場を日本語に
-const jpreijo = {
-    sitifuku: '大阪七福神めぐり',
-    naniwa: 'なにわ七幸めぐり',
-    shifudo: '大阪四不動霊場',
-    jusan: 'おおさか十三仏霊場',
-    kawauti: '河内西国霊場',
-    izumi: '和泉西国霊場',
-    nasi: ' '
+const chapterjp = {
+    tentisosei: '【第1章】天地創世',
+    izumosinwa: '【第2章】出雲神話',
+    kunidukuri: '【第3章】国づくり',
+    tensokorin: '【第4章】天孫降臨',
+    hitogami: '【第5章】人神・武将',
+    kindai: '【第6章】近代・現代'
 };
 
 //画面切り替えボタン押したとき
@@ -74,7 +73,8 @@ inputForm.addEventListener('submit', async (e) => {
 
     const name = document.getElementById('name').value;
     const date = document.getElementById('date').value;
-    const reijo = document.getElementById('reijo').value;
+    const deity = document.getElementById('deity').value;
+    const chapter = document.getElementById('chapter').value;
     const mapurl = document.getElementById('mapurl').value;
     const memo = document.getElementById('memo').value;
     const photoFile = document.getElementById('photo').files[0];
@@ -86,7 +86,7 @@ inputForm.addEventListener('submit', async (e) => {
         // supabaseへデータを挿入
         const { data, error } = await supabaseClient
             .from('meguri_items')
-            .insert([{ name, date, reijo, mapurl, memo, photo_data: photoBase64 }])
+            .insert([{ name, date, deity, chapter, mapurl, memo, photo_data: photoBase64 }])
             .select();
 
         if (error) {
@@ -160,16 +160,14 @@ loginSubmitBtn.addEventListener('click', async () => {
 });
 
 //霊場ごとに色を変える
-function reijocolor(reijo) {
-    switch (reijo) {
-        case 'sitifuku': return '#ffd166';
-        case 'naniwa': return '#ff9ebb';
-        case 'shifudo': return '#ff8a65';
-        case 'jusan': return '#ba68c8';
-        case 'kawauti': return '#81c784';
-        case 'izumi': return '#64b5f6';
-        case 'nasi': return '#ccc';
-        
+function chaptercolor(chapter) {
+    switch (chapter) {
+        case 'tentisosei': return '#ffd166';
+        case 'izumosinwa': return '#ff9531';
+        case 'kunidukuri': return '#e3643e';
+        case 'tensokorin': return '#3aa75d';
+        case 'hitogami': return '#cb5bea';
+        case 'kindai': return '#494a4b';
     };
 }
 
@@ -205,8 +203,8 @@ async function loadItems() {
 // ピン・カードを描画
 function renderItemUI(item) {
     const photoList = document.getElementById('photo-list');
-    const reijoname = jpreijo[item.reijo] || ' ';
-    const themecolor = reijocolor(item.reijo);
+    const chaptername = chapterjp[item.chapter] || ' ';
+    const themecolor = chaptercolor(item.chapter);
     const itemid = 'item-' + (item.id || Date.now());
 
     let marker = null;
@@ -256,7 +254,8 @@ function renderItemUI(item) {
         <div class="photo-info">
             <h3>${item.name}</h3>
             <p class="date">${item.date}</p>
-            <p class="reijo">${reijoname}</p>
+            <p class="chapter">${chaptername}</p>
+            <p class="deity">${item.deity}</p>
             ${item.memo ? `<p class="memo">${item.memo}</p>` : ''}
             <div class="card-footer">
                 <button class="delete-btn">削除</button>
