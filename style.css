@@ -488,6 +488,10 @@ h2 {
     }
 
     .nav-buttons button {
-       font-size: 14px;
+       font-size: 20px;
+    }
+
+    .nav-buttons {
+    height: 80px;
     }
 }
